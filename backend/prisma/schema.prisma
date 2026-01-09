@@ -17,7 +17,7 @@ model user {
   updatedAt   DateTime @updatedAt
 }
 
-model Book {
+model book {
   id          String   @id @default(uuid())
   title       String
   author      String
