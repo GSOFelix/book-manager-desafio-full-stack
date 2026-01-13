@@ -26,7 +26,7 @@ export class AllExceptionsFilter implements ExceptionFilter{
                 message = (exResponse as any).message || 'Error';
             }
         }
-
+        
         const errorResponse : HttpExceptionResponse ={
             statusCode:status,
             message
