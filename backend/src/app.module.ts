@@ -13,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     PrismaModule,
     AuthModule,
     UserModule,
+    BooksModule
   ],
 })
 export class AppModule {}
