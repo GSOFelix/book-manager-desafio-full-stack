@@ -1,23 +1,24 @@
-import { IsNotEmpty, IsNumber, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
 
-export class CreateBookDto{
+export class CreateBookDto {
     @IsString()
     @MinLength(3)
     @IsNotEmpty()
-    title:string;
+    title: string;
 
     @IsString()
     @MinLength(3)
-    @MaxLength(10)
     @IsNotEmpty()
     author: string;
 
+    @IsOptional()
     @IsNumber()
     @Min(1000)
     @Max(2100)
     year?: number;
 
+    @IsOptional()
     @IsString()
-    @MaxLength(100)
-    description?:string
+    @MaxLength(255)
+    description?: string
 }
