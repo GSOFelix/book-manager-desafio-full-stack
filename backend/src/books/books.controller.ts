@@ -3,6 +3,7 @@ import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/createBook.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UpdateBookDto } from './dto/updateBook.dto';
+import { PagedRequest } from './dto/pagedRequest.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('books')
@@ -16,8 +17,8 @@ export class BooksController {
     }
 
     @Get()
-    async getaAll(@Query('title') title?: string) {
-        return this.bookService.findAll(title);
+    async getaAll(@Query() paginationDto: PagedRequest) {
+        return this.bookService.findAll(paginationDto);
     }
 
     @Get(':id')
