@@ -3,6 +3,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBookDto } from './dto/createBook.dto';
 import { UpdateBookDto } from './dto/updateBook.dto';
 import { validateYear } from './rules/validate-book-year';
+import { PagedRequest } from './dto/pagedRequest.dto';
+import { contains } from 'class-validator';
+import { PaginationHelper } from 'src/common/helper/pagination.helper';
 
 @Injectable()
 export class BooksService {
@@ -20,17 +23,26 @@ export class BooksService {
         return this.prisma.book.findUnique({ where: { id: idBook } });
     }
 
-    async findAll(title?: string) {
-        return this.prisma.book.findMany({
-            where: title
-                ? {
-                    title: {
-                        contains: title,
-                        mode: 'insensitive',
-                    },
+    async findAll(pagedDto: PagedRequest) {
+        const { page, limit,title } = pagedDto;
+        const skip = PaginationHelper.calculateSkip(page, limit);
+        const where = title ?
+            {
+                title: {
+                    contains: title,
+                    mode: 'insensitive' as const
                 }
-                : undefined,
-        });
+            }
+            :
+            undefined;
+
+        const [books, total] = await Promise.all([
+            this.prisma.book.findMany({ where,skip, take: limit }),
+            this.prisma.book.count({where}),
+        ]);
+
+        return PaginationHelper.buildResponse(books, total, page, limit);
+
     }
 
     async update(idBook: string, data: UpdateBookDto) {
