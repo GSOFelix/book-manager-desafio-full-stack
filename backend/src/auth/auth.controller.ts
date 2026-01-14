@@ -9,41 +9,15 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
     @Post('register')
-    async resgister(
-        @Body() registerDto: RegisterDto,
-        @Res({ passthrough: true }) res: Response) {
-        const{user,token,message}  = await this.authService.register(registerDto);
-
-        res.cookie('bm_token', token, {
-            httpOnly: true,
-            sameSite: 'none',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-        })
-
-        return { message,user };
+    async resgister(@Body() registerDto: RegisterDto) {
+        return await this.authService.register(registerDto)
     }
 
     @Post('login')
-    async login(
-        @Body() loginDto: LoginDto,
-        @Res({ passthrough: true }) res: Response) {
+    async login(@Body() loginDto: LoginDto,) {
 
-        const { token, user } = await this.authService.login(loginDto);
-
-        res.cookie('bm_token', token, {
-            httpOnly: true,
-            sameSite: 'none',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-        })
-
-        return { user };
+        return await this.authService.login(loginDto);
     }
 
-    @Post('logout')
-    logout(@Res({ passthrough: true }) res: Response) {
-        res.clearCookie('bm_token', { path: '/' });
-        return { message: 'Logged out' };
-    }
+    
 }

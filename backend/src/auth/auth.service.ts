@@ -37,7 +37,7 @@ export class AuthService {
         return{
             message: 'User created with successful.',
             user: result,
-            token
+            access_token: token
         }
     }
 
@@ -53,7 +53,7 @@ export class AuthService {
         const token = this.generateToken(user.id,user.email);
 
         return{
-            token,
+            access_token: token,
             user:{
                 id:user.id,
                 email: user.email,
