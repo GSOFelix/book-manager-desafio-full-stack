@@ -1,7 +1,11 @@
+'use client';
+
+import { User } from "@/types/user";
+
 const TOKEN_KEY = 'bm_token';
 const USER_KEY = 'bm_user';
 
-export function setSession(token:string,user:string){
+export function setSession(token:string,user:User){
     localStorage.setItem(TOKEN_KEY,token);
     localStorage.setItem(USER_KEY,JSON.stringify(user))
 }
