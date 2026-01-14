@@ -16,7 +16,7 @@ export class AuthController {
 
         res.cookie('bm_token', token, {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             secure: process.env.NODE_ENV === 'production',
             path: '/',
         })
@@ -33,7 +33,7 @@ export class AuthController {
 
         res.cookie('bm_token', token, {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             secure: process.env.NODE_ENV === 'production',
             path: '/',
         })
