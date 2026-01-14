@@ -2,7 +2,7 @@
 import { AuthApi } from "@/lib/api";
 import { getUser, isAuthenticated, setSession } from "@/lib/storage";
 import { CreateUserRequest, LoginRequest } from "@/types/user";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 const MODE={
@@ -39,8 +39,8 @@ export default function LoginPage() {
       const res = await AuthApi.login(loginData);
       // Espera token e user do backend
       setSession(res.access_token, res.user);
-      const userStorage = getUser();
       console.log(res);
+      router.push('/books');
     } catch (err:any) {
       setError(err.message || 'Erro ao entrar');
     } finally {
@@ -57,6 +57,7 @@ export default function LoginPage() {
       const res = await AuthApi.register(registerData);
       setSession(res.access_token, res.user);
       console.log(res)
+      //router.push('/books');
     } catch (err:any) {
       setError(err.message || 'Erro ao cadastrar');
     } finally {
@@ -104,7 +105,7 @@ export default function LoginPage() {
                   {loading ? 'Entrando...' : 'Entrar'}
                 </button>
               </form>
-              {error && <p  className="text-sm text-green-400 mt-3">{error}</p>}
+              {error && <p  className="text-sm text-red-600 mt-3">❗{error}</p>}
               <p className="text-sm text-green-300/80 mt-3">
                 Não tem conta?{' '}
                 <button  className="text-green-400 hover:text-green-300 underline decoration-green-500" onClick={() => { setMode(MODE.register); setError(''); }}>
@@ -154,7 +155,7 @@ export default function LoginPage() {
                   {loading ? 'Cadastrando...' : 'Cadastrar'}
                 </button>
               </form>
-              {error && <p  className="text-sm text-green-400 mt-3">{error}</p>}
+              {error && <p  className="text-sm text-red-600 mt-3">❗{error}</p>}
               <p className="text-sm text-green-300/80 mt-3">
                 Já tem conta?{' '}
                 <button  className="text-[#ffffff] hover:text-green-300 underline decoration-[#ffffff]" onClick={() => { setMode(MODE.login); setError(''); }}>

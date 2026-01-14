@@ -31,14 +31,15 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
+        const errorData = error.response?.data as { message?: string } | undefined;
+        const errorMessage = errorData?.message || error.message || 'Erro na requisição';
+
         if (error.response?.status === 401) {
             clearSession();
-            throw new Error('Não autorizado');
+            throw new Error(errorMessage);
         }
 
         // Extrair mensagem de erro
-        const errorData = error.response?.data as { message?: string } | undefined;
-        const errorMessage = errorData?.message || error.message || 'Erro na requisição';
         
         throw new Error(errorMessage);
     }
