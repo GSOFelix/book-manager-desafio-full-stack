@@ -3,8 +3,6 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 // Requests
@@ -21,6 +19,11 @@ export interface LoginRequest{
 
 // Responses
 export interface LoginResponse {
-  token: string;
+  access_token: string;
   user: User;
+}
+
+export interface CreateUserResponse {
+  user:User
+  access_token: string;
 }
