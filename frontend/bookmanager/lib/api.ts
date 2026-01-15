@@ -1,11 +1,10 @@
 import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse } from "@/types/user";
 import { clearSession, getToken } from "./storage";
-import { CreateBookRequest, ListBooksParams, UpdateBookRequest } from "@/types/book";
+import { Book, CreateBookRequest, ListBooksParams, PaginatedResponse, UpdateBookRequest } from "@/types/book";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API;
 
-// Criar instância do Axios
 const api = axios.create({
     baseURL: BASE_URL,
     headers: {
@@ -13,8 +12,6 @@ const api = axios.create({
     },
     withCredentials: false,
 });
-
-// Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
     (config) => {
         const token = getToken();
@@ -39,8 +36,6 @@ api.interceptors.response.use(
             throw new Error(errorMessage);
         }
 
-        // Extrair mensagem de erro
-        
         throw new Error(errorMessage);
     }
 );
@@ -66,32 +61,34 @@ async function request<T = unknown>(path: string, { method = 'GET', body, params
 }
 
 export const AuthApi = {
-    login: (data: LoginRequest):Promise<LoginResponse> =>
+    login: (data: LoginRequest): Promise<LoginResponse> =>
         request('/auth/login',
             {
                 method: 'POST',
                 body: data
             }),
-    register: (data: CreateUserRequest):Promise<CreateUserResponse> =>
+    register: (data: CreateUserRequest): Promise<CreateUserResponse> =>
         request('/auth/register', {
             method: 'POST',
             body: data
         }),
+    validateToken: (): Promise<void> =>
+        request('/auth/validate')
 };
 
 export const BooksApi = {
-    list: ({ page, pageSize, title }: ListBooksParams) =>
-        request('/books', {params: { page, pageSize, title }}),
+    list: ({ page, title }: ListBooksParams): Promise<PaginatedResponse<Book>> =>
+        request('/books', { params: { page, title } }),
 
     create: (data: CreateBookRequest) =>
         request('/books/create', { method: 'POST', body: data }),
 
-    get: (id: string) =>
+    get: (id: string): Promise<Book> =>
         request(`/books/${id}`),
 
     update: (id: string, data: UpdateBookRequest) =>
         request(`/books/${id}`, { method: 'PUT', body: data }),
-        
+
     remove: (id: string) =>
         request(`/books/${id}`, { method: 'DELETE' }),
 
