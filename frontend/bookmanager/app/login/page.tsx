@@ -1,18 +1,18 @@
 'use client';
 import { AuthApi } from "@/lib/api";
-import { getUser, isAuthenticated, setSession } from "@/lib/storage";
+import { isAuthenticated, setSession } from "@/lib/storage";
 import { CreateUserRequest, LoginRequest } from "@/types/user";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
-const MODE={
-  login:'login',
-  register:'register'
+const MODE = {
+  LOGIN: 'login',
+  REGISTER: 'register'
 }
 
 export default function LoginPage() {
   const router = useRouter();
-  const [mode, setMode] = useState(MODE.login); 
+  const [mode, setMode] = useState(MODE.LOGIN);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,35 +30,33 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
-      const loginData : LoginRequest= {
+      const loginData: LoginRequest = {
         email: email.trim(),
         password
       }
-
       const res = await AuthApi.login(loginData);
-      // Espera token e user do backend
       setSession(res.access_token, res.user);
-      console.log(res);
       router.push('/books');
-    } catch (err:any) {
+    } catch (err: any) {
       setError(err.message || 'Erro ao entrar');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRegister = async (e:FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
-      const registerData: CreateUserRequest = {name,email,password};
+      const registerData: CreateUserRequest = { name, email, password };
       const res = await AuthApi.register(registerData);
       setSession(res.access_token, res.user);
-      console.log(res)
-      //router.push('/books');
-    } catch (err:any) {
+      router.push('/books');
+    } catch (err: any) {
       setError(err.message || 'Erro ao cadastrar');
     } finally {
       setLoading(false);
@@ -66,19 +64,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div  className="max-w-4xl mx-auto px-4 py-10 min-h-screen bg-black text-green-100">
+    <div className="max-w-4xl mx-auto px-4 py-10 min-h-screen bg-black text-green-100">
       <div className="text-5xl md:text-6xl font-extrabold text-center mb-8 bg-gradient-to-r from-emerald-300 via-green-500 to-emerald-600 bg-[length:200%_200%] animate-[gradientMove_8s_ease_infinite] bg-clip-text text-transparent tracking-tight drop-shadow-[0_0_14px_rgba(16,185,129,0.45)] relative after:content-[''] after:block after:w-28 after:h-[3px] after:bg-emerald-500/70 after:mx-auto after:mt-2 after:rounded-full">
         BookManager
       </div>
 
-      <div  className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto">
         <div className="bg-neutral-900 border border-green-700/40 shadow-lg shadow-green-900/20 rounded-xl p-5">
-          {mode === MODE.login ? (
+          {mode === MODE.LOGIN ? (
             <>
-              <h2  className="text-lg font-semibold mb-4 text-green-300">Entrar</h2>
-              <form  onSubmit={handleLogin} className="space-y-3">
+              <h2 className="text-lg font-semibold mb-4 text-green-300">Entrar</h2>
+              <form onSubmit={handleLogin} className="space-y-3">
                 <div>
-                  <label  className="block text-sm text-green-300 mb-1">Email</label>
+                  <label className="block text-sm text-green-300 mb-1">Email</label>
                   <input
                     type="email"
                     className="w-full rounded-lg border border-green-700/40 bg-neutral-950 text-green-100 px-3 py-2 placeholder-green-400/50 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/40"
@@ -88,7 +86,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div>
-                  <label  className="block text-sm text-green-300 mb-1">Senha</label>
+                  <label className="block text-sm text-green-300 mb-1">Senha</label>
                   <input
                     type="password"
                     className="w-full rounded-lg border border-green-700/40 bg-neutral-950 text-green-100 px-3 py-2 placeholder-green-400/50 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/40"
@@ -105,20 +103,20 @@ export default function LoginPage() {
                   {loading ? 'Entrando...' : 'Entrar'}
                 </button>
               </form>
-              {error && <p  className="text-sm text-red-600 mt-3">❗{error}</p>}
+              {error && <p className="text-sm text-red-600 mt-3">❗{error}</p>}
               <p className="text-sm text-green-300/80 mt-3">
                 Não tem conta?{' '}
-                <button  className="text-green-400 hover:text-green-300 underline decoration-green-500" onClick={() => { setMode(MODE.register); setError(''); }}>
+                <button className="text-green-400 hover:text-green-300 underline decoration-green-500" onClick={() => { setMode(MODE.REGISTER); setError(''); }}>
                   Cadastrar novo usuário
                 </button>
               </p>
             </>
           ) : (
             <>
-              <h2  className="text-lg font-semibold mb-4 text-green-300">Cadastrar Usuário</h2>
-              <form  onSubmit={handleRegister} className="space-y-3">
+              <h2 className="text-lg font-semibold mb-4 text-green-300">Cadastrar Usuário</h2>
+              <form onSubmit={handleRegister} className="space-y-3">
                 <div>
-                  <label  className="block text-sm text-green-300 mb-1">Nome</label>
+                  <label className="block text-sm text-green-300 mb-1">Nome</label>
                   <input
                     className="w-full rounded-lg border border-green-700/40 bg-neutral-950 text-green-100 px-3 py-2 placeholder-green-400/50 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/40"
                     value={name}
@@ -127,7 +125,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div>
-                  <label  className="block text-sm text-green-300 mb-1">Email</label>
+                  <label className="block text-sm text-green-300 mb-1">Email</label>
                   <input
                     type="email"
                     className="w-full rounded-lg border border-green-700/40 bg-neutral-950 text-green-100 px-3 py-2 placeholder-green-400/50 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/40"
@@ -137,7 +135,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div>
-                  <label  className="block text-sm text-green-300 mb-1">Senha</label>
+                  <label className="block text-sm text-green-300 mb-1">Senha</label>
                   <input
                     type="password"
                     className="w-full rounded-lg border border-green-700/40 bg-neutral-950 text-green-100 px-3 py-2 placeholder-green-400/50 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/40"
@@ -155,10 +153,10 @@ export default function LoginPage() {
                   {loading ? 'Cadastrando...' : 'Cadastrar'}
                 </button>
               </form>
-              {error && <p  className="text-sm text-red-600 mt-3">❗{error}</p>}
+              {error && <p className="text-sm text-red-600 mt-3">❗{error}</p>}
               <p className="text-sm text-green-300/80 mt-3">
                 Já tem conta?{' '}
-                <button  className="text-[#ffffff] hover:text-green-300 underline decoration-[#ffffff]" onClick={() => { setMode(MODE.login); setError(''); }}>
+                <button className="text-green-400 hover:text-green-300 underline decoration-green-500" onClick={() => { setMode(MODE.LOGIN); setError(''); }}>
                   Voltar para login
                 </button>
               </p>
