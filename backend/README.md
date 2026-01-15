@@ -1,98 +1,158 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📘 Book Manager — Full-Stack Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Uma aplicação completa para gerenciamento de livros com autenticação JWT e CRUD completo.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Demo Online
 
-## Description
+A aplicação está disponível online:
+- **Frontend**: https://book-manager-desafio-full-stack.vercel.app
+- **Backend**: Hospedado no Render
+- **Banco de Dados**: PostgreSQL no Supabase
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+> ⚠️ **Atenção**: O backend está hospedado no plano gratuito do Render, que hiberna após períodos de inatividade. Na primeira requisição após a hibernação, pode haver um delay de 30-60 segundos até o servidor "acordar". Aguarde um momento e tente novamente caso encontre erro de timeout.
 
-## Project setup
+## 🛠️ Tecnologias Utilizadas
 
-```bash
-$ npm install
-```
+### Backend
+- **NestJS** - Framework Node.js
+- **TypeScript** - Linguagem
+- **Prisma** - ORM
+- **PostgreSQL** - Banco de dados
+- **JWT** - Autenticação
+- **bcrypt** - Hash de senhas
 
-## Compile and run the project
+## 📋 Funcionalidades
 
-```bash
-# development
-$ npm run start
+- ✅ Autenticação com JWT
+- ✅ Registro de usuários
+- ✅ CRUD completo de livros
+- ✅ Busca de livros por título
+- ✅ Proteção de rotas
+- ✅ Interface responsiva
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## 🔧 Configuração e Execução Local
 
-## Run tests
+### Pré-requisitos
 
-```bash
-# unit tests
-$ npm run test
+- Node.js (versão 18 ou superior)
+- npm ou yarn
+- PostgreSQL instalado e rodando
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
-```
+## 🗄️ Backend (NestJS)
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 1. Navegue até a pasta do backend
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cd backend
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Instale as dependências
 
-## Resources
+```bash
+npm install
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 3. Configure as variáveis de ambiente
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Crie um arquivo `.env` na raiz da pasta `backend` com o seguinte conteúdo:
 
-## Support
+```env
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/bookmanager?schema=public"
+JWT_SECRET="sua_chave_secreta_aqui"
+JWT_EXPIRES="7h" <- exemplo
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Explicação da string de conexão PostgreSQL:**
 
-## Stay in touch
+```
+postgresql://[USUARIO]:[SENHA]@[HOST]:[PORTA]/[NOME_DO_BANCO]?schema=public
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Exemplo com valores reais:**
+```env
+DATABASE_URL="postgresql://postgres:minhasenha@localhost:5432/bookmanager?schema=public"
+```
 
-## License
+- **USUARIO**: usuário do PostgreSQL (padrão: `postgres`)
+- **SENHA**: senha do usuário
+- **HOST**: endereço do servidor (local: `localhost`)
+- **PORTA**: porta do PostgreSQL (padrão: `5432`)
+- **NOME_DO_BANCO**: nome do banco de dados (ex: `bookmanager`)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 4. Configure o Prisma
+
+Inicialize o Prisma (caso ainda não tenha sido feito):
+
+```bash
+npx prisma init
+```
+
+### 5. Execute as migrations
+
+Crie as tabelas no banco de dados:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+Este comando irá:
+- Criar as tabelas no banco de dados
+- Gerar os tipos TypeScript do Prisma
+
+### 6. Gere o Prisma Client
+
+```bash
+npx prisma generate
+```
+
+### 7. (Opcional) Visualize o banco de dados
+
+Para abrir o Prisma Studio e visualizar os dados:
+
+```bash
+npx prisma studio
+```
+
+### 8. Inicie o servidor
+
+```bash
+npm run start:dev
+```
+
+O backend estará rodando em `http://localhost:3001`
+---
+
+## 🔐 Endpoints da API
+
+### Autenticação
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/auth/register` | Criar novo usuário |
+| POST | `/auth/login` | Fazer login e receber token JWT |
+
+### Livros (requer autenticação)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/books` | Listar todos os livros  paginado `?page=1` (com busca opcional `?search=termo`) |
+| POST | `/books` | Criar novo livro |
+| GET | `/books/:id` | Buscar livro por ID |
+| PUT | `/books/:id` | Atualizar livro |
+| DELETE | `/books/:id` | Remover livro |
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido como desafio técnico.
+
+---
+
+## 🤝 Contribuindo
+
+Sinta-se à vontade para abrir issues e pull requests!
