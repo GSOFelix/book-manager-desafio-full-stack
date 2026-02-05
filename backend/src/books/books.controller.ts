@@ -17,12 +17,12 @@ export class BooksController {
     }
 
     @Get()
-    async getaAll(@Query() paginationDto: PagedRequest) {
+    async getAll(@Query() paginationDto: PagedRequest) {
         return this.bookService.findAll(paginationDto);
     }
 
     @Get(':id')
-    async getaById(@Param('id') id: string) {
+    async getById(@Param('id') id: string) {
         return this.bookService.findById(id);
     }
 
